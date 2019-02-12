@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
@@ -101,6 +102,12 @@ class ProductsController extends Controller
 
         // 创建一个选择图片的框
         $form->image('image', '封面图片')->rules('required|image');
+
+        $form->hasMany('images', '产品轮播图', function (Form\NestedForm $form) {
+            $form->image('path', '图片')->uniqueName();
+            $form->number('order', '排位')->rules('required|integer|min:0');
+        });
+//        $form->customMultipleImage('multi_images', '轮播图')->removable();
 
         // 创建一个富文本编辑器
         $form->editor('description', '商品描述')->rules('required');

@@ -18,4 +18,7 @@
  *
  */
 
+use \App\Admin\Extensions\MultiImage;
+
 Encore\Admin\Form::forget(['map']);
+Encore\Admin\Form::extend('customMultipleImage', MultiImage::class);
